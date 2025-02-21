@@ -1,12 +1,15 @@
 import re
 
-Define the path to your Apache log file
+# Define the path to your Apache log file
 log_file_path = '/path/to/your/access.log'
 
-Regular expression to match log entries with 500 errors
+# Regular expression to match log entries with 500 errors
 error_pattern = r'.* "\S+" (\d{3}) .*'
 
-Open the log file and parse each line
+# Initialize a counter for 500 errors
+error_count = 0
+
+# Open the log file and parse each line
 with open(log_file_path, 'r') as file:
     for line in file:
         # Search for 500 errors in each line
@@ -15,3 +18,7 @@ with open(log_file_path, 'r') as file:
             status_code = match.group(1)
             if status_code == '500':
                 print(line.strip())  # Output the line with the 500 error
+                error_count += 1  # Increment the counter for each 500 error
+
+# Display the total number of 500 errors found
+print(f"\nTotal 500 errors found: {error_count}")
