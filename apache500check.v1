@@ -1,0 +1,17 @@
+import re
+
+Define the path to your Apache log file
+log_file_path = '/path/to/your/access.log'
+
+Regular expression to match log entries with 500 errors
+error_pattern = r'.* "\S+" (\d{3}) .*'
+
+Open the log file and parse each line
+with open(log_file_path, 'r') as file:
+    for line in file:
+        # Search for 500 errors in each line
+        match = re.match(error_pattern, line)
+        if match:
+            status_code = match.group(1)
+            if status_code == '500':
+                print(line.strip())  # Output the line with the 500 error
